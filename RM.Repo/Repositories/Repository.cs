@@ -1,18 +1,19 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
+using RM.Repo.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace RM.Repo
+namespace RM.Repo.Repositories
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        private readonly ApplicationContext _context;
+        private readonly DbContext _context;
         private DbSet<T> entities { get; set; }
 
-        public Repository(ApplicationContext context)
+        public Repository(DbContext context)
         {
             _context = context;
             entities = _context.Set<T>();
@@ -32,6 +33,7 @@ namespace RM.Repo
             }
 
             entities.Add(entity);
+            _context.SaveChanges();
         }
 
         public void Update(T entity)
@@ -42,6 +44,7 @@ namespace RM.Repo
             }
 
             entities.Update(entity);
+            _context.SaveChanges();
         }
 
         public void Delete(T entity)
@@ -52,10 +55,6 @@ namespace RM.Repo
             }
 
             entities.Remove(entity);
-        }
-
-        public void Save()
-        {
             _context.SaveChanges();
         }
 

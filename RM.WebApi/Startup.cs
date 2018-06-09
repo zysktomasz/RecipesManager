@@ -12,6 +12,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using RM.Repo;
+using RM.Service.Interfaces;
+using RM.Service.Services;
 
 namespace RM.WebApi
 {
@@ -31,6 +33,9 @@ namespace RM.WebApi
             // TODO: create Extensions for ConfigureServices
             services.AddDbContext<ApplicationContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddTransient<IRecipeService, RecipeService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace RM.Repo
+namespace RM.Repo.Interfaces
 {
     public interface IRepository<T>
     {
@@ -10,6 +10,5 @@ namespace RM.Repo
         void Create(T entity);
         void Update(T entity);
         void Delete(T entity);
-        void Save();
     }
 }
