@@ -7,7 +7,11 @@ namespace RM.Data.Models
     public class Ingredient
     {
         public int Id { get; set; }
-        public string Descripton { get; set; } // np "250g macaroni"
+        public string Name { get; set; } // np "250g macaroni"
+        public int Value { get; set; }
+        public string Unit { get; set; }
+
+        public int RecipeId { get; set; }
         public Recipe Recipe { get; set; } // recipe that this Ingredient corresponds to
     }
 }
