@@ -11,6 +11,7 @@ namespace RM.Service.Interfaces
         IEnumerable<RecipeWithIngredientsDto> GetAllRecipesWithIngredients();
         IEnumerable<RecipeDto> GetAllRecipes();
         RecipeWithIngredientsDto GetRecipeWithIngredientsById(int id);
+        RecipeDto GetRecipeById(int id);
 
         void CreateRecipe(Recipe recipe);
         void UpdateRecipe(Recipe recipe);
