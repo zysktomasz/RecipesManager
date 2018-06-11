@@ -6,6 +6,7 @@ using System.Text;
 using System.Linq;
 using RM.Repo.Interfaces;
 using RM.Repo;
+using RM.Service.DTOs;
 
 namespace RM.Service.Services
 {
@@ -41,6 +42,24 @@ namespace RM.Service.Services
         public void UpdateRecipe(Recipe recipe)
         {
             _unitOfWork.Recipes.Update(recipe);
+        }
+
+        public IEnumerable<RecipeWithIngredientsDto> GetAllRecipesWithIngredients()
+        {
+            return _unitOfWork.Recipes.GetAllRecipesWithIngredients()
+                        .Select(r => new RecipeWithIngredientsDto
+                        {
+                            Id = r.Id,
+                            Title = r.Title,
+                            Description = r.Description,
+                            Ingredients = r.Ingredients.Select(i => new IngredientDto
+                            {
+                                Id = i.Id,
+                                Name = i.Name,
+                                Unit = i.Unit,
+                                Value = i.Value
+                            })
+                        }).AsEnumerable();
         }
     }
 }

@@ -25,13 +25,14 @@ namespace RM.WebApi.Controllers
         {
             try
             {
-                var recipes = _recipeService.GetAllRecipes();
+                var recipes = _recipeService.GetAllRecipesWithIngredients();
 
                 return Ok(recipes);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "Internal server error");
+                
+                return StatusCode(500, $"{ex.Message} Internal server error");
             }
         }
 
