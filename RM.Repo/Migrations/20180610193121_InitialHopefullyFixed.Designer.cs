@@ -10,8 +10,8 @@ using RM.Repo;
 namespace RM.Repo.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20180609113108_Initial")]
-    partial class Initial
+    [Migration("20180610193121_InitialHopefullyFixed")]
+    partial class InitialHopefullyFixed
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,9 +27,13 @@ namespace RM.Repo.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Descripton");
+                    b.Property<string>("Name");
 
                     b.Property<int?>("RecipeId");
+
+                    b.Property<string>("Unit");
+
+                    b.Property<int>("Value");
 
                     b.HasKey("Id");
 
