@@ -37,12 +37,10 @@ namespace RM.Service.Services
                        .Create(recipe);
         }
 
-        public void Delete(RecipeDto recipe)
+        public void Delete(int recipeId)
         {
-            var recipeToDelete = new Recipe
-            {
-                Id = recipe.Id
-            };
+            var recipeToDelete = _unitOfWork.Recipes
+                                    .GetById(recipeId);
 
             _unitOfWork.Recipes
                        .Delete(recipeToDelete);

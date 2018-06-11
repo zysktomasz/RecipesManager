@@ -14,6 +14,6 @@ namespace RM.Service.Interfaces
 
         void CreateRecipe(Recipe recipe);
         void UpdateRecipe(Recipe recipe);
-        void Delete(RecipeDto recipe);
+        void Delete(int recipeId);
     }
 }
