@@ -71,19 +71,6 @@ namespace RM.Service.Services
             };
         }
 
-        public RecipeDto GetRecipeById(int id)
-        {
-            var recipe = _unitOfWork.Recipes
-                                    .GetById(id);
-
-            return new RecipeDto
-            {
-                Id = recipe.Id,
-                Title = recipe.Title,
-                Description = recipe.Description
-            };
-        }
-
         public void UpdateRecipe(Recipe recipe)
         {
             _unitOfWork.Recipes
@@ -107,7 +94,5 @@ namespace RM.Service.Services
                             })
                         }).AsEnumerable();
         }
-
-       
     }
 }
