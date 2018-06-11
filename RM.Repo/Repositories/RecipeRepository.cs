@@ -1,21 +1,28 @@
-﻿using RM.Data.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using RM.Data.Models;
 using RM.Repo.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace RM.Repo.Repositories
 {
     public class RecipeRepository : Repository<Recipe>, IRecipeRepository
     {
-        public ApplicationContext context
+        private ApplicationContext context { get; }
+
+        public RecipeRepository(DbContext context) // DbContext instead of concrete implementation to avoid DI
+            : base(context as ApplicationContext)
         {
-            get { return context as ApplicationContext; }
         }
 
-        public RecipeRepository(ApplicationContext context) 
-            : base(context)
+        public IEnumerable<Recipe> GetAllRecipesWithIngredients()
         {
+            return _context.Recipes
+                           .Include(r => r.Ingredients)
+                           .AsEnumerable();
         }
+
     }
 }

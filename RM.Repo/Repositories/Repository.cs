@@ -10,12 +10,12 @@ namespace RM.Repo.Repositories
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        private readonly DbContext _context;
+        protected readonly ApplicationContext _context;
         private DbSet<T> entities { get; set; }
 
         public Repository(DbContext context)
         {
-            _context = context;
+            _context = context as ApplicationContext;
             entities = _context.Set<T>();
         }
 
@@ -33,7 +33,6 @@ namespace RM.Repo.Repositories
             }
 
             entities.Add(entity);
-            _context.SaveChanges();
         }
 
         public void Update(T entity)
@@ -44,7 +43,6 @@ namespace RM.Repo.Repositories
             }
 
             entities.Update(entity);
-            _context.SaveChanges();
         }
 
         public void Delete(T entity)
@@ -55,7 +53,6 @@ namespace RM.Repo.Repositories
             }
 
             entities.Remove(entity);
-            _context.SaveChanges();
         }
 
     }
