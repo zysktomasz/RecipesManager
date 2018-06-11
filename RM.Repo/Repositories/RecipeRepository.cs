@@ -24,5 +24,18 @@ namespace RM.Repo.Repositories
                            .AsEnumerable();
         }
 
+        public Recipe GetById(int recipeId)
+        {
+            var recipe = _context.Recipes
+                                 .Include(r => r.Ingredients)
+                                 .SingleOrDefault(r => r.Id == recipeId);
+
+            if (recipe == null)
+            {
+                throw new ArgumentNullException("Entity Null!");
+            }
+
+            return recipe;
+        }
     }
 }

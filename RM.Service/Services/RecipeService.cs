@@ -21,27 +21,47 @@ namespace RM.Service.Services
 
         public IEnumerable<Recipe> GetAllRecipes()
         {
-            return _unitOfWork.Recipes.GetAll();
+            return _unitOfWork.Recipes
+                              .GetAll();
         }
 
         public void CreateRecipe(Recipe recipe)
         {
-            _unitOfWork.Recipes.Create(recipe);
+            _unitOfWork.Recipes
+                       .Create(recipe);
         }
 
         public void Delete(Recipe recipe)
         {
-            _unitOfWork.Recipes.Delete(recipe);
+            _unitOfWork.Recipes
+                       .Delete(recipe);
         }
 
-        public Recipe GetRecipeById(int id)
+        public RecipeWithIngredientsDto GetRecipeById(int id)
         {
-            return GetAllRecipes().SingleOrDefault(rec => rec.Id == id);
+
+            var recipe = _unitOfWork.Recipes
+                                    .GetById(id);
+
+            return new RecipeWithIngredientsDto
+            {
+                Id = recipe.Id,
+                Title = recipe.Title,
+                Description = recipe.Description,
+                Ingredients = recipe.Ingredients.Select(i => new IngredientDto
+                {
+                    Id = i.Id,
+                    Name = i.Name,
+                    Unit = i.Unit,
+                    Value = i.Value
+                })
+            };
         }
 
         public void UpdateRecipe(Recipe recipe)
         {
-            _unitOfWork.Recipes.Update(recipe);
+            _unitOfWork.Recipes
+                       .Update(recipe);
         }
 
         public IEnumerable<RecipeWithIngredientsDto> GetAllRecipesWithIngredients()

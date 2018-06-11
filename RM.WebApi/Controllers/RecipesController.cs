@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RM.Data.Models;
+using RM.Service.DTOs;
 using RM.Service.Interfaces;
 
 namespace RM.WebApi.Controllers
@@ -38,14 +39,23 @@ namespace RM.WebApi.Controllers
 
         // GET: api/Recipes/5
         [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        public IActionResult Get(int id)
         {
-            return "value";
+            try
+            {
+                var recipe = _recipeService.GetRecipeById(id);
+
+                return Ok(recipe);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"{ex.Message}");
+            }
         }
 
         // POST: api/Recipes
         [HttpPost]
-        public IActionResult Post([FromBody] Recipe recipe)
+        public IActionResult Post([FromBody] RecipeWithIngredientsDto recipe)
         {
             try
             {
@@ -59,8 +69,7 @@ namespace RM.WebApi.Controllers
                     return BadRequest("Invalid model object");
                 }
 
-                _recipeService.CreateRecipe(recipe);
-
+                
                 return Ok();
             }
             catch (Exception ex)
