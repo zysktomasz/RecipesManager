@@ -9,11 +9,11 @@ namespace RM.Service.Interfaces
     public interface IRecipeService
     {
         IEnumerable<RecipeWithIngredientsDto> GetAllRecipesWithIngredients();
-        IEnumerable<Recipe> GetAllRecipes();
-        RecipeWithIngredientsDto GetRecipeById(int id);
+        IEnumerable<RecipeDto> GetAllRecipes();
+        RecipeWithIngredientsDto GetRecipeWithIngredientsById(int id);
 
         void CreateRecipe(Recipe recipe);
         void UpdateRecipe(Recipe recipe);
-        void Delete(Recipe recipe);
+        void Delete(RecipeDto recipe);
     }
 }

@@ -33,7 +33,7 @@ namespace RM.WebApi.Controllers
             catch (Exception ex)
             {
                 
-                return StatusCode(500, $"{ex.Message} Internal server error");
+                return StatusCode(500, $"{ex.Message}");
             }
         }
 
@@ -43,7 +43,7 @@ namespace RM.WebApi.Controllers
         {
             try
             {
-                var recipe = _recipeService.GetRecipeById(id);
+                var recipe = _recipeService.GetRecipeWithIngredientsById(id);
 
                 return Ok(recipe);
             }

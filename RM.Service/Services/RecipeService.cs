@@ -19,10 +19,16 @@ namespace RM.Service.Services
             _unitOfWork = unitOfWork;
         }
 
-        public IEnumerable<Recipe> GetAllRecipes()
+        public IEnumerable<RecipeDto> GetAllRecipes()
         {
             return _unitOfWork.Recipes
-                              .GetAll();
+                              .GetAll()
+                              .Select(r => new RecipeDto
+                              {
+                                  Id = r.Id,
+                                  Title = r.Title,
+                                  Description = r.Description
+                              });
         }
 
         public void CreateRecipe(Recipe recipe)
@@ -31,13 +37,20 @@ namespace RM.Service.Services
                        .Create(recipe);
         }
 
-        public void Delete(Recipe recipe)
+        public void Delete(RecipeDto recipe)
         {
+            var recipeToDelete = new Recipe
+            {
+                Id = recipe.Id
+            };
+
             _unitOfWork.Recipes
-                       .Delete(recipe);
+                       .Delete(recipeToDelete);
+
+            _unitOfWork.Complete();
         }
 
-        public RecipeWithIngredientsDto GetRecipeById(int id)
+        public RecipeWithIngredientsDto GetRecipeWithIngredientsById(int id)
         {
 
             var recipe = _unitOfWork.Recipes
