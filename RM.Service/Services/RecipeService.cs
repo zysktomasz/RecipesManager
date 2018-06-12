@@ -96,10 +96,33 @@ namespace RM.Service.Services
             };
         }
 
-        public void UpdateRecipe(Recipe recipe)
+        public RecipeDto GetRecipeById(int id)
         {
+            // TODO: is it needlessly lazy loading ingredients?
+            var recipe = _unitOfWork.Recipes
+                                    .GetById(id);
+
+            return new RecipeDto
+            {
+                Id = recipe.Id,
+                Title = recipe.Title,
+                Description = recipe.Description
+            };
+        }
+
+        public void UpdateRecipe(int recipeId, RecipeDto modifiedRecipe)
+        {
+            var recipe = _unitOfWork.Recipes.GetById(recipeId);
+
+            // map modifiedRecipe to found by recipeId old recipe
+
+            recipe.Title = modifiedRecipe.Title;
+            recipe.Description = modifiedRecipe.Description;
+
             _unitOfWork.Recipes
                        .Update(recipe);
+
+            _unitOfWork.Complete();
         }
 
         public IEnumerable<RecipeWithIngredientsDto> GetAllRecipesWithIngredients()

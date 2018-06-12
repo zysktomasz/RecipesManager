@@ -81,8 +81,18 @@ namespace RM.WebApi.Controllers
 
         // PUT: api/Recipes/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Put(int id, [FromBody] RecipeDto modifiedRecipe)
         {
+            try
+            {
+                _recipeService.UpdateRecipe(id, modifiedRecipe);
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"{ex.Message}\nInternal server error");
+            }
         }
 
         // DELETE: api/ApiWithActions/5
