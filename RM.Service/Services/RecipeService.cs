@@ -31,10 +31,37 @@ namespace RM.Service.Services
                               });
         }
 
-        public void CreateRecipe(Recipe recipe)
+        public void CreateRecipe(RecipeWithIngredientsDto recipeWithIngredientsDTO)
         {
+            // mapping
+            var recipeToCreate = new Recipe
+            {
+                Title = recipeWithIngredientsDTO.Title,
+                Description = recipeWithIngredientsDTO.Description,
+                Ingredients = recipeWithIngredientsDTO.Ingredients.Select(i => new Ingredient
+                {
+                    Id = i.Id,
+                    Name = i.Name,
+                    Unit = i.Unit,
+                    Value = i.Value
+                }).ToList()
+            };
+
             _unitOfWork.Recipes
-                       .Create(recipe);
+                       .Create(recipeToCreate);
+            _unitOfWork.Complete();
+
+            // map just created entities' Ids to recipeWithIngredientsDto input DTOs
+            // to show them (Ids) in a response
+            recipeWithIngredientsDTO.Id = recipeToCreate.Id;
+            recipeWithIngredientsDTO.Ingredients = recipeToCreate.Ingredients
+                                                                 .Select(i => new IngredientDto
+                                                                 {
+                                                                     Id = i.Id,
+                                                                     Name = i.Name,
+                                                                     Unit = i.Unit,
+                                                                     Value = i.Value
+                                                                 });
         }
 
         public void Delete(int recipeId)

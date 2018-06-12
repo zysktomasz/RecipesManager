@@ -12,7 +12,7 @@ namespace RM.Service.Interfaces
         IEnumerable<RecipeDto> GetAllRecipes();
         RecipeWithIngredientsDto GetRecipeWithIngredientsById(int id);
 
-        void CreateRecipe(Recipe recipe);
+        void CreateRecipe(RecipeWithIngredientsDto recipeWithIngredientsDTO);
         void UpdateRecipe(Recipe recipe);
         void Delete(int recipeId);
     }

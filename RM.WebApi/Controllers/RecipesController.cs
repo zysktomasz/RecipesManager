@@ -38,8 +38,8 @@ namespace RM.WebApi.Controllers
         }
 
         // GET: api/Recipes/5
-        [HttpGet("{id}", Name = "Get")]
-        public IActionResult Get(int id)
+        [HttpGet("{id}", Name = "RecipeById")]
+        public IActionResult GetRecipeById(int id)
         {
             try
             {
@@ -69,8 +69,9 @@ namespace RM.WebApi.Controllers
                     return BadRequest("Invalid model object");
                 }
 
-                
-                return Ok();
+                _recipeService.CreateRecipe(recipe);
+
+                return CreatedAtRoute("RecipeById", new { id = recipe.Id }, recipe);
             }
             catch (Exception ex)
             {
