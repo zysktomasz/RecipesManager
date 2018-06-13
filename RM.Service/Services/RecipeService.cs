@@ -77,10 +77,10 @@ namespace RM.Service.Services
 
         public RecipeWithIngredientsDto GetRecipeWithIngredientsById(int id)
         {
-
             var recipe = _unitOfWork.Recipes
                                     .GetById(id);
-
+            if (recipe == null)
+                return null;
             return new RecipeWithIngredientsDto
             {
                 Id = recipe.Id,

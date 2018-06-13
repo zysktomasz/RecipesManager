@@ -41,16 +41,12 @@ namespace RM.WebApi.Controllers
         [HttpGet("{id}", Name = "RecipeById")]
         public IActionResult GetRecipeById(int id)
         {
-            try
-            {
-                var recipe = _recipeService.GetRecipeWithIngredientsById(id);
+            var recipe = _recipeService.GetRecipeWithIngredientsById(id);
 
-                return Ok(recipe);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"{ex.Message}");
-            }
+            if (recipe == null)
+                return NotFound();
+
+            return Ok(recipe);
         }
 
         // POST: api/Recipes
