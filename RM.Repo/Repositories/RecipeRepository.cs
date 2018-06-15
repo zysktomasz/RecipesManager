@@ -28,6 +28,7 @@ namespace RM.Repo.Repositories
         {
             var recipe = _context.Recipes
                                  .Include(r => r.Ingredients)
+                                 .AsNoTracking()
                                  .SingleOrDefault(r => r.Id == recipeId);
 
             return recipe;
