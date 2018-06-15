@@ -53,25 +53,20 @@ namespace RM.WebApi.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] RecipeWithIngredientsDto recipe)
         {
+            if (recipe == null)
+            {
+                return BadRequest("Recipe object is null");
+            }
+
             try
             {
-                if (recipe == null)
-                {
-                    return BadRequest("Recipe object is null");
-                }
-
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest("Invalid model object");
-                }
-
                 _recipeService.CreateRecipe(recipe);
 
                 return CreatedAtRoute("RecipeById", new { id = recipe.Id }, recipe);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "Internal server error");
+                return StatusCode(500, $"{ex.Message}");
             }
         }
 

@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="7.6.102" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\RM.Data\RM.Data.csproj" />
     <ProjectReference Include="..\RM.Repo\RM.Repo.csproj" />
   </ItemGroup>
