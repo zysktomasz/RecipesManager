@@ -71,12 +71,17 @@ namespace RM.WebApi.Controllers
         }
 
         // PUT: api/Recipes/5
-        [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] RecipeDto modifiedRecipe)
+        [HttpPut("{recipeId}")]
+        public IActionResult Put(int recipeId, [FromBody] RecipeDto modifiedRecipe)
         {
+            var recipeToUpdate = _recipeService.GetRecipeById(recipeId);
+
+            if (recipeToUpdate == null)
+                return NotFound();
+
             try
             {
-                _recipeService.UpdateRecipe(id, modifiedRecipe);
+                _recipeService.UpdateRecipe(recipeId, modifiedRecipe);
 
                 return NoContent();
             }
@@ -87,12 +92,17 @@ namespace RM.WebApi.Controllers
         }
 
         // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        [HttpDelete("{recipeId}")]
+        public IActionResult Delete(int recipeId)
         {
+            var recipeToDelete = _recipeService.GetRecipeById(recipeId);
+
+            if (recipeToDelete == null)
+                return NotFound();
+
             try
             {
-                _recipeService.Delete(id);
+                _recipeService.Delete(recipeId);
 
                 return NoContent();
             }

@@ -11,10 +11,12 @@ namespace RM.Service.Interfaces
         IEnumerable<RecipeWithIngredientsDto> GetAllRecipesWithIngredients();
         IEnumerable<RecipeDto> GetAllRecipes();
         RecipeWithIngredientsDto GetRecipeWithIngredientsById(int id);
+
+        // unused method, delete it?
         RecipeDto GetRecipeById(int id);
 
         void CreateRecipe(RecipeWithIngredientsDto recipeWithIngredientsDTO);
-        void UpdateRecipe(int recipeId,RecipeDto modifiedRecipe);
+        void UpdateRecipe(int recipeId, RecipeDto modifiedRecipe);
         void Delete(int recipeId);
     }
 }

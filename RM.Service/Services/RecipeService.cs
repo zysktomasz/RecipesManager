@@ -66,14 +66,15 @@ namespace RM.Service.Services
 
         public void Delete(int recipeId)
         {
-            var recipeToDelete = _unitOfWork.Recipes
-                                    .GetById(recipeId);
+            var recipe = new Recipe { };
+            recipe.Id = recipeId;
 
             _unitOfWork.Recipes
-                       .Delete(recipeToDelete);
+                       .Delete(recipe);
 
             _unitOfWork.Complete();
         }
+
 
         public RecipeWithIngredientsDto GetRecipeWithIngredientsById(int id)
         {
@@ -81,6 +82,7 @@ namespace RM.Service.Services
                                     .GetById(id);
             if (recipe == null)
                 return null;
+
             return new RecipeWithIngredientsDto
             {
                 Id = recipe.Id,
@@ -102,6 +104,9 @@ namespace RM.Service.Services
             var recipe = _unitOfWork.Recipes
                                     .GetById(id);
 
+            if (recipe == null)
+                return null;
+
             return new RecipeDto
             {
                 Id = recipe.Id,
@@ -112,10 +117,10 @@ namespace RM.Service.Services
 
         public void UpdateRecipe(int recipeId, RecipeDto modifiedRecipe)
         {
-            var recipe = _unitOfWork.Recipes.GetById(recipeId);
+            // map modifiedRecipe to recipeToUpdate recipe properties
 
-            // map modifiedRecipe to found by recipeId old recipe
-
+            var recipe = new Recipe { };
+            recipe.Id = recipeId;
             recipe.Title = modifiedRecipe.Title;
             recipe.Description = modifiedRecipe.Description;
 
