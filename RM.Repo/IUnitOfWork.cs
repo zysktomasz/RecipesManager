@@ -8,6 +8,7 @@ namespace RM.Repo
     public interface IUnitOfWork
     {
         IRecipeRepository Recipes { get; }
+        IIngredientRepository Ingredients { get; }
 
         void Complete();
     }
