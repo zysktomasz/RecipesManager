@@ -38,6 +38,7 @@ namespace RM.WebApi
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IRecipeService, RecipeService>();
+            services.AddScoped<IIngredientService, IngredientService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
