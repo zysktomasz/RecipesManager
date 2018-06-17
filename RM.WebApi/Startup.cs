@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using RM.Repo;
 using RM.Service.Interfaces;
 using RM.Service.Services;
+using RM.WebApi.Extensions;
 
 namespace RM.WebApi
 {
@@ -31,14 +32,10 @@ namespace RM.WebApi
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 });
 
-            
-            // TODO: create Extensions for ConfigureServices
-            services.AddDbContext<ApplicationContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IRecipeService, RecipeService>();
-            services.AddScoped<IIngredientService, IngredientService>();
+            services.ConfigureSqlServerContext(Configuration);
+            services.ConfigureUnitOfWork();
+            services.ConfigureRecipeManagerServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
